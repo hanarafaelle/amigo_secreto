@@ -5,6 +5,17 @@
   <%= @group.name %>
 </p>
 
+<% if @group.participants.present? %>
+	<p>
+		<strong> Participantes: </strong>
+		<ul>
+			<% @group.participants.each do |participant| %>
+			  <li> <%= participant.name %> </li>
+			 <% end %>
+		 </ul> 
+	</p>
+<% end %>	
+
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %> |
 <%= link_to 'New Participant', new_group_participant_path(@group) %>
