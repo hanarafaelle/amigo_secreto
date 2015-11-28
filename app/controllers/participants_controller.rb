@@ -4,7 +4,8 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @participants = Participant.all
+    @group = Group.find(params[:group_id])
+    @participants = @group.participants
   end
 
   # GET /participants/1
@@ -14,6 +15,10 @@ class ParticipantsController < ApplicationController
 
   # GET /participants/new
   def new
+    puts "+"*80
+    puts params 
+
+    @group = Group.find(params[:group_id])
     @participant = Participant.new
   end
 
@@ -24,11 +29,12 @@ class ParticipantsController < ApplicationController
   # POST /participants
   # POST /participants.json
   def create
-    @participant = Participant.new(participant_params)
+    @group = Group.find(params[:group_id])
+    @participant = @group.participants.new(participant_params)
 
     respond_to do |format|
       if @participant.save
-        format.html { redirect_to @participant, notice: 'Participant was successfully created.' }
+        format.html { redirect_to group_participants_path(@group), notice: 'Participant was successfully created.' }
         format.json { render :show, status: :created, location: @participant }
       else
         format.html { render :new }
